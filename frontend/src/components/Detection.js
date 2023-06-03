@@ -1,71 +1,100 @@
-import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
-import './Detection.css';
+import React, { useState } from "react";
+import axios from "axios";
+import "./Detection.css";
 
-export default function Detection() {
-  const [image, setImage] = useState(null);
+const Detection = () => {
+  const [selectedFile, setSelectedFile] = useState();
+  const [resultImage, setResultImage] = useState();
   const [result, setResult] = useState([]);
-  const canvasRef = useRef(null);
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
+  const onSelectFile = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
 
-    if (result && image) {
-      const img = new Image();
-      img.onload = () => {
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
+  const handleUpload = () => {
+    if (selectedFile) {
+      const formData = new FormData();
+      formData.append("file", selectedFile);
 
-        result.forEach((obj) => {
-          ctx.beginPath();
-          ctx.lineWidth = '3';
-          ctx.strokeStyle = 'red';
-          ctx.rect(obj.xmin, obj.ymin, obj.xmax - obj.xmin, obj.ymax - obj.ymin);
-          ctx.stroke();
+      axios
+        .post("http://localhost:8000/object-to-img", formData)
+        .then((response) => {
+          const result = response.data.result;
+          setResult(result);
+          const imageBody = JSON.parse(response.data.img.body);
+          const imageBase64 = imageBody.image;
+          const boundingBoxes = result.map((label) => ({
+            x: label.x,
+            y: label.y,
+            width: label.width,
+            height: label.height,
+          }));
+
+          setResultImage({ base64: imageBase64, boundingBoxes: boundingBoxes });
+        })
+        .catch((error) => {
+          console.log(error);
         });
-      };
-      img.src = URL.createObjectURL(image);
     }
-  }, [image, result]);
+  };
 
-  const handleUpload = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append('file', image);
-
-    try {
-      const res = await axios.post('http://localhost:8000/object-to-json', formData);
-      setResult(res.data.result);
-    } catch (err) {
-      console.error(err);
+  const renderBoundingBoxes = () => {
+    if (!resultImage || !resultImage.boundingBoxes) {
+      return null;
     }
+
+    return resultImage.boundingBoxes.map((box, index) => (
+      <div
+        key={index}
+        className="bounding-box"
+        style={{
+          left: box.x,
+          top: box.y,
+          width: box.width,
+          height: box.height,
+        }}
+      ></div>
+    ));
   };
 
   return (
     <div className="container">
-      <h1 className="title">Object Detection</h1>
-      <form onSubmit={handleUpload}>
-        <div className="form-group">
-          <label htmlFor="fileInput">Select an image:</label>
-          <input id="fileInput" type="file" onChange={(e) => setImage(e.target.files[0])} />
-        </div>
-        <button type="submit" className="btn-upload">Upload</button>
-      </form>
-
-      {result.length > 0 && (
-        <div>
-          <h2>Object Detection Result:</h2>
-          <ul>
-            {result.map((obj, idx) => (
-              <li key={idx}>{obj.name}</li>
-            ))}
-          </ul>
+      <div className="upload-area">
+        <input type="file" id="file" className="input-file" onChange={onSelectFile} />
+        <label htmlFor="file" className="file-label">
+          Choose Image
+        </label>
+        <button className="upload-button" onClick={handleUpload}>
+          Detect
+        </button>
+      </div>
+      {resultImage && (
+        <div className="result-area">
+          <div className="image-container">
+            <img
+              src={`data:image/jpeg;base64,${resultImage.base64}`}
+              alt="Result Image"
+              className="result-image"
+            />
+            <div className="bounding-boxes">{renderBoundingBoxes()}</div>
+          </div>
+          <div className="damage-info">
+            <h3>Damage Information</h3>
+            <ul className="damage-list">
+              {resultImage.boundingBoxes.map((box, index) => (
+                <li key={index}>
+                  <span className="damage-class">{result}</span>
+                  
+                </li>
+              ))}
+            </ul>
+            <p>Total damages detected: {resultImage.boundingBoxes.length}</p>
+          </div>
+          
         </div>
       )}
-
-      <canvas ref={canvasRef} className="canvas"></canvas>
     </div>
   );
-}
+};
+
+export default Detection;
