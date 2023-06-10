@@ -18,7 +18,7 @@ export default function Home() {
       <div className="navbar-brand">AUTH</div>
     </nav>
     <WelcomeMessage></WelcomeMessage>
-    <h4 style={{color:'white'}}>A minimal authentication application made using FARM stack and YOLOv5 detection</h4>
+    <h4 style={{color:'white'}}>A minimal road safety Detection app using MERN and YOLV5</h4>
     <div className="buttonContainer">
       <button onClick={handleRegisterClick}className="RegisterButton">Register</button>
       <div className="monkey_image">
@@ -26,6 +26,7 @@ export default function Home() {
       </div>
       <button onClick={handleLoginClick} className="LoginButton">Login</button>
       </div>
+      
         </div>
       
     );

@@ -79,17 +79,19 @@ const Detection = () => {
             <div className="bounding-boxes">{renderBoundingBoxes()}</div>
           </div>
           <div className="damage-info">
-            <h3>Damage Information</h3>
-            <ul className="damage-list">
-              {resultImage.boundingBoxes.map((box, index) => (
-                <li key={index}>
-                  <span className="damage-class">{result}</span>
-                  
-                </li>
-              ))}
-            </ul>
-            <p>Total damages detected: {resultImage.boundingBoxes.length}</p>
-          </div>
+  <h3>Damage Information</h3>
+  <ul className="damage-list">
+    {result
+      .filter((item, index) => result.indexOf(item) === index) // filter out duplicate classes
+      .map((item, index) => (
+        <li key={index}>
+          <span className="damage-class">{item + " "}</span>
+        </li>
+      ))}
+  </ul>
+  <p>Total damages detected: {resultImage.boundingBoxes.length}</p>
+</div>
+
           
         </div>
       )}

@@ -7,15 +7,19 @@
 
 .navbar {
   top: 0;
-  background-color: #2979ff;
+  background-color: #2370f5;
   color: white;
-  padding: 18px;
+  padding: 0.8rem;
+  align-items: center;
+  justify-content: center;
   width: 100vw;
 }
 
 .navbar-brand {
   font-weight: bolder;
   font-size: 20px;
+  align-items: center;
+  justify-content: center;
 }
 
 .buttonContainer {
@@ -46,7 +50,7 @@
 
 .RegisterButton:focus,
 .LoginButton:focus {
-  outline: none;
+  outline:none;
 }
 
 .ImageSpacer {

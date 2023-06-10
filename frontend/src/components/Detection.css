@@ -1,95 +1,73 @@
 .container {
-    text-align: center;
-    margin-top: 50px;
-    background-color: aqua;
-    padding: 10px; /* Add the desired padding value */
-  }
-  
-  .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 30px;
-  }
-  
-  .upload-area {
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  .input-file {
-    display: none;
-  }
-  
-  .file-label {
-   
-    padding: 10px 20px;
-    background-color: #3c64ad;
-    color: #fff;
-    border:none;
-    cursor: pointer;
-  }
-  
-  .upload-button {
-    padding: 10px 20px;
-    background-color: #3c64ad;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    margin-top: 20px; /* Add margin-top to create a gap */
-  }
-  
-  .result-area {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
-  }
-  
-  .image-container {
-    position: relative;
-    margin-bottom: 20px;
-  }
-  
-  .result-image {
-    max-width: 500px;
-    max-height: 400px;
-  }
-  
-  .bounding-boxes {
-    position: absolute;
-  }
-  
-  .bounding-box {
-    position: absolute;
-    border: 2px solid red;
-  }
-  
-  .damage-info {
-    text-align: center;
-  }
-  
-  .damage-list {
-    list-style-type: none;
-    padding: 0;
-    margin-bottom: 10px;
-  }
-  
-  .damage-list li {
-    margin-bottom: 10px;
-  }
-  
-  .damage-class {
-    font-weight: bold;
-  }
-  
-  .damage-box {
-    margin-left: 10px;
-    color: #777;
-  }
-  
-  p {
-    font-weight: bold;
-  }
-  
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+ 
+}
+
+.upload-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-file {
+  display: none;
+}
+
+.file-label {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.upload-button {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #2196F3;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.result-area {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.image-container {
+  position: relative;
+}
+
+.result-image {
+  width: auto;
+  height: auto;
+}
+
+.bounding-boxes {
+  position: absolute;
+}
+
+.bounding-box {
+  border: solid red;
+}
+
+.damage-info {
+  margin-left: 20px;
+}
+
+.damage-list {
+  list-style-type: none;
+  font-display: white;
+}
+
+.damage-class {
+  font-weight: bold;
+}
