@@ -1,7 +1,14 @@
-/* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useState } from "react";
 import axios from "axios";
-import { MDBNavbar, MDBNavbarBrand, MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from "mdbreact";
+import {
+  MDBNavbar,
+  MDBNavbarBrand,
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBInput,
+  MDBBtn,
+} from "mdb-react-ui-kit";
 import "./Detection.css";
 
 export default function Detection() {
@@ -17,38 +24,44 @@ export default function Detection() {
     setSelectedFile(e.target.files[0]);
   };
 
-  const handleUpload = () => {
+  const handleUpload = async () => {
     if (selectedFile) {
       const formData = new FormData();
       formData.append("file", selectedFile);
 
-      axios
-        .post("http://localhost:8000/object-to-img", formData)
-        .then((response) => {
-          const result = response.data.result;
-          setResult(result);
-          const imageBody = JSON.parse(response.data.img.body);
-          const imageBase64 = imageBody.image;
-          const boundingBoxes = result.map((label) => ({
-            x: label.x,
-            y: label.y,
-            width: label.width,
-            height: label.height,
-          }));
+      try {
+        const response = await axios.post(
+          "http://localhost:8000/object-to-img",
+          formData
+        );
+        const result = response.data.result;
+        setResult(result);
+        const imageBody = JSON.parse(response.data.img.body);
+        const imageBase64 = imageBody.image;
+        const boundingBoxes = result.map((label) => ({
+          x: label.x,
+          y: label.y,
+          width: label.width,
+          height: label.height,
+        }));
 
-          setResultImage({ base64: imageBase64, boundingBoxes: boundingBoxes });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        setResultImage({ base64: imageBase64, boundingBoxes: boundingBoxes });
+
+        // Store the detected image
+        const detectedImageFormData = new FormData();
+        detectedImageFormData.append("file", imageBase64);
+        await axios.post(
+          "http://localhost:8000/store-detected-image",
+          detectedImageFormData
+        );
+        console.log("Detected image stored successfully");
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
   const renderBoundingBoxes = () => {
-    if (!resultImage || !resultImage.boundingBoxes) {
-      return null;
-    }
-
     return resultImage.boundingBoxes.map((box, index) => (
       <div
         key={index}
@@ -63,36 +76,38 @@ export default function Detection() {
     ));
   };
 
-  const handleSubmitComplaint = () => {
+  const handleSubmitComplaint = async () => {
     // Send the complaint to the MongoDB database
     const complaintData = {
-      image: resultImage.base64,
+      image: "http://localhost:8000/detected-image",
       location,
       pinCode,
       ghmc,
       complaint,
+      damages: [...result],
+      date: new Date(),
+      status: "Pending",
     };
+    console.log(complaintData)
 
-    axios
-      .post("http://localhost:3001/complaints", complaintData)
-      .then((response) => {
-        console.log("Complaint submitted successfully");
-        // Reset the form
-        setSelectedFile(null);
-        setResultImage(null);
-        setResult([]);
-        setLocation("");
-        setPinCode("");
-        setGHMC("");
-        setComplaint("");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      await axios.post("http://localhost:3001/complaint/Postcomplaints", complaintData);
+      console.log("Complaint submitted successfully");
+
+      setSelectedFile(null);
+      setResultImage(null);
+      setResult([]);
+      setLocation("");
+      setPinCode("");
+      setGHMC("");
+      setComplaint("");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
-    <div className="box">
+    <div className="detection-container">
       <MDBNavbar color="indigo" dark>
         <MDBNavbarBrand>Dashboard</MDBNavbarBrand>
       </MDBNavbar>
@@ -100,13 +115,22 @@ export default function Detection() {
         <MDBRow>
           <MDBCol md="6">
             <div className="upload-area">
-              <input type="file" id="file" className="input-file" onChange={onSelectFile} />
+              <input
+                type="file"
+                id="file"
+                className="input-file"
+                onChange={onSelectFile}
+              />
               <label htmlFor="file" className="file-label">
                 Choose Image
               </label>
-              <button className="upload-button" onClick={handleUpload}>
+              <MDBBtn
+                color="primary"
+                className="detect-button"
+                onClick={handleUpload}
+              >
                 Detect
-              </button>
+              </MDBBtn>
             </div>
           </MDBCol>
           <MDBCol md="6">
@@ -131,7 +155,9 @@ export default function Detection() {
                         </li>
                       ))}
                   </ul>
-                  <p>Total damages detected: {resultImage.boundingBoxes.length}</p>
+                  <p>
+                    Total damages detected: {resultImage.boundingBoxes.length}
+                  </p>
                 </div>
               </div>
             )}
@@ -180,6 +206,4 @@ export default function Detection() {
       </MDBContainer>
     </div>
   );
-};
-
-
+}
