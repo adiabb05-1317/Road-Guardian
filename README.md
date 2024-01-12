@@ -1,6 +1,3 @@
-
-
-```markdown
 # Road-Guardian: Crowd-Quested Road Monitoring System
 
 ## Introduction
@@ -24,7 +21,7 @@ Road-Guardian is an innovative system designed for real-time road damage reporti
 1. **Python Dependencies**:
    ```bash
    pip install -r requirements.txt
-   ```
+
 
 2. **FastAPI Server**:
    ```bash
