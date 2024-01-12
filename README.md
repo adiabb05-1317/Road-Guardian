@@ -1,4 +1,4 @@
-Certainly! Below is the complete markdown for your "Road-Guardian" project README. You can copy it all at once and use it directly in your project:
+
 
 ```markdown
 # Road-Guardian: Crowd-Quested Road Monitoring System
@@ -73,9 +73,13 @@ Explore our interactive demo for a firsthand experience of Road-Guardian.
 ## Contributing
 We welcome contributions to the Road-Guardian project. Please read our contributing guidelines for more information.
 
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
 ## Contact
 For any queries, please reach out to [adikanneti05@gmail.com](mailto:adikanneti05@gmail.com).
 
 ## Acknowledgements
 - Neil Goggle Institute of Technology
 - Contributors and supporters of the project
+```
