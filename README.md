@@ -1,82 +1,41 @@
-# Road-Guardian: Crowd-Quested Road Monitoring System
+# Crowd Quested Intelligent Road Monitoring System
 
-## Introduction
-Road-Guardian is an innovative system designed for real-time road damage reporting and visualization. This project utilizes advanced technologies like MERN stack, CNN, and FastAPI to provide an efficient and user-friendly interface for road condition monitoring.
+![Technologies Badge](https://img.shields.io/badge/Technologies-MERN%20stack%20|%20CNN%20|%20Google%20Maps%20API%20|%20FastAPI%20|%20React%20|%20YOLOv5-green)
 
-[Watch the Demo Video](https://www.youtube.com/watch?v=oeOp2TWUpV0)
+## 📝 Description
+Crowd Quested Intelligent Road Monitoring System is a sophisticated solution for real-time damage reporting and visualization. This system leverages the power of Convolutional Neural Networks (CNN) and YOLOv5 for precise damage detection, offering an innovative approach to road monitoring.
 
-## Features
-- Real-time damage reporting
-- Automated damage detection using Convolutional Neural Networks
-- Interactive map visualization
+## 🎥 Demo
+[![Demo Video](http://img.youtube.com/vi/oeOp2TWUpV0/0.jpg)](https://youtu.be/oeOp2TWUpV0)
 
-## Installation
+## 🚀 Technologies
+- **MERN Stack**: MongoDB, Express.js, React, Node.js
+- **Machine Learning**: CNN, YOLOv5
+- **APIs**: Google Maps API
+- **Backend Framework**: FastAPI
+- **Frontend**: React
 
-### Prerequisites
-- Node.js and npm
-- Python 3.x
+## 🔧 Installation
 
-### Setting up the Backend
-
-1. **Python Dependencies**:
-   ```bash
-   pip install -r requirements.txt
-
-
-2. **FastAPI Server**:
-   ```bash
-   uvicorn main:app --reload
-   ```
-   This command starts the FastAPI server where the model is deployed.
-
-### Setting up the Frontend
-
-1. **Node.js Dependencies**:
-   Navigate to the frontend directory and install the packages:
-   ```bash
-   npm install
-   npm install axios react-router-dom
-   ```
-
-2. **Starting the Frontend Server**:
-   ```bash
-   npm start
-   ```
-   This command starts the frontend server.
-
-### Setting up the newBackend
-
-1. **Node.js Dependencies**:
-   Navigate to the newBackend directory:
-   ```bash
-   npm install
-   npm install mongoose nodemon cors express
-   ```
-
-2. **Starting the Development Server**:
-   ```bash
-   npm run dev
-   ```
-   This starts the development Node.js server at port 3001.
-
-## Demo
-Explore our interactive demo for a firsthand experience of Road-Guardian.
-[View the Demo](https://blush-barbi-34.tiiny.site/)
-
-## Additional Resources
-- [Project Video Overview](https://www.youtube.com/watch?v=oeOp2TWUpV0)
-- [Documentation PDF](https://example.com/demo.pdf) (Replace with actual PDF link)
-
-## Contributing
-We welcome contributions to the Road-Guardian project. Please read our contributing guidelines for more information.
-
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Contact
-For any queries, please reach out to [adikanneti05@gmail.com](mailto:adikanneti05@gmail.com).
-
-## Acknowledgements
-- Neil Goggle Institute of Technology
-- Contributors and supporters of the project
+### Backend Node Server
+```bash
+git clone https://github.com/adiabb05-1317/Road-Guardian.git
+cd Road-Guardian
+npm install
+npm run dev
 ```
+### Frontend Server
+```bash
+cd path/to/frontend
+npm install
+npm start
+```
+### Python Flask Server for YOLOv5 Model
+```bash
+cd path/to/flask_server
+pip install -r requirements.txt
+gunicorn main:app --reload
+```
+
+
+
