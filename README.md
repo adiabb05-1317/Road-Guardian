@@ -7,6 +7,9 @@ Crowd Quested Intelligent Road Monitoring System is a sophisticated solution for
 
 ## 🎥 Demo
 [![Demo Video](http://img.youtube.com/vi/oeOp2TWUpV0/0.jpg)](https://youtu.be/oeOp2TWUpV0)
+![Screenshot 2024-08-02 at 7 05 10 PM](https://github.com/user-attachments/assets/211c8b7b-150e-4160-a812-805dccc4c768)
+![image](https://github.com/user-attachments/assets/3e324908-e92b-4e87-b6e8-6b13c367ae10)
+
 
 ## 🚀 Technologies
 - **MERN Stack**: MongoDB, Express.js, React, Node.js
